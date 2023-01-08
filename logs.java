@@ -1,80 +1,84 @@
 /*
-*  This program is based on the Rock-Paper-Scissors game
- *     with a computer opponent.
+* This program makes an hourglass.
 *
 * @author  Huzaifa Khalid
 * @version 1.0
-* @since   2023-01-08
+* @since   2023-1-08
 */
 
 import java.util.Scanner;
 
 /**
- * This function determines the winner between the user and computer.
+* This program makes an hourglass.
 */
-final class RockPaperScissors {
+final class HourGlass {
 
     /**
-    * Prevent instantiation.
+    * Prevent instantiation
     * Throw an exception IllegalStateException.
     * if this ever is called
     *
     * @throws IllegalStateException
     *
     */
-    private RockPaperScissors() {
+    private HourGlass() {
+        // Prevent instantiation
+        // Optional: throw an exception e.g. AssertionError
+        // if this ever *is* called
         throw new IllegalStateException("Cannot be instantiated");
     }
 
     /**
-    * The starting main() function.
+    * Creates the hourglass.
     *
-    * @param args No args will be used
+    * @param sand the amount of sand in the hourglass
+    * @param centre the amount of extra spaces to centre the sand
     */
-    public static void main(String[] args) {
+    static void hourglass(final int sand, final int centre) {
+        String hourglassStr = "";
+        int counter1;
+        int counter2;
+        for (counter1 = 0; counter1 < centre; counter1++) {
+            hourglassStr += " ";
+        }
 
-        final int max = 3;
-        final int min = 1;
-        final int randomNumber = (int) (Math.random() * max + min);
-        final String rock = "rock";
-        final String paper = "paper";
-        final String scissors = "scissors";
-        final String computerDecision = "\nThe computer chose ";
-        final String computer;
+        for (counter2 = 0; counter2 < sand; counter2++) {
+            hourglassStr += "* ";
+        }
+        System.out.println(hourglassStr);
+
+        if (sand > 1) {
+            hourglass(sand - 1, centre + 1);
+        }
+        System.out.println(hourglassStr);
+    }
+
+    /**
+    * This is the main function.
+    *
+    * @param args this will not be used
+    */
+    public static void main(final String[] args) {
+        final String invalidInputStr = "\nInvalid Input";
+
+        System.out.println("Hourglass");
 
         // input
         final Scanner userInput = new Scanner(System.in);
-        System.out.println("Enter rock, paper, or scissors: ");
-        final String player = userInput.nextLine();
-        // process & output
-        if (randomNumber == 1) {
-            computer = rock;
-        } else if (randomNumber == 2) {
-            computer = paper;
-        } else {
-            computer = scissors;
-        }
+        System.out.print("\nPlease input a number greater than 1: ");
 
-        if (player.equals(computer)) {
-            System.out.println(computerDecision + computer);
-            System.out.println("\nTie.");
-        } else if (player.equals(rock) && computer.equals(paper)
-            || player.equals(paper) && computer.equals(scissors)
-            || player.equals(scissors)
-            && computer.equals(rock)) {
-            System.out.println(computerDecision + computer);
-            System.out.println("\nYou lost.");
-        } else if (player.equals(paper) && computer.equals(rock)
-            || player.equals(scissors) && computer.equals(rock)
-            || player.equals(rock)
-            && computer.equals(scissors)) {
-            System.out.println(computerDecision + computer);
-            System.out.println("\nYou win!");
-        } else {
-            System.out.println("\nSomething is not right.");
+        try {
+            final int sandInput = userInput.nextInt();
+            System.out.println();
+            if (sandInput > 1) {
+                // process
+                hourglass(sandInput, 0);
+            } else {
+                System.out.println(invalidInputStr);
+            }
+        } catch (java.util.InputMismatchException ex) {
+            System.err.print(invalidInputStr);
         }
-        System.out.println("\nDone.");
-
     }
 }
 
